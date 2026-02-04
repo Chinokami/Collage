@@ -16,6 +16,7 @@ int main() {
   int size_unique = 0;
   
   srand(time(NULL));
+  cout << "Array:" << endl;
   for (int i = 0; i < n; i++) {
     arr[i] = rand() % 21 - 10;
     cout << arr[i] << " ";
@@ -24,6 +25,7 @@ int main() {
   
   sort(arr, arr + n);
   
+  cout << "Sorted array:" << endl;
   for (int i = 0; i < n; i++)
     cout << arr[i] << " ";
     
@@ -36,8 +38,14 @@ int main() {
       arr_unique[size_unique++] = arr[i];
   }
 
-  for (int i = 0; i < size_unique; i++)
+  int line_count = 0;
+  cout << "Unique array:" << endl;
+  for (int i = 0; i < size_unique; i++) {
     cout << arr_unique[i] << " ";
+    line_count++;
+    if (line_count % 7 == 0)
+      cout << endl;
+  }
   
   delete[] arr;
   delete[] arr_unique;
