@@ -18,7 +18,7 @@ int main() {
     
     if (R == 3) {
       double S = 4 * pow(R, 2);
-      double V = (4 / 3) * pow(R, 3);
+      double V = (4.0 / 3.0) * pow(R, 3);
       
       cout << "Number: " << i << endl;
       cout << a << "² + " << b << "² + " << c << "² = " << R << "²" << endl;
