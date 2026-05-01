@@ -1,65 +1,53 @@
 #include <iostream>
-#include <sstream>    
-#include <string>  
+#include <sstream>   
+#include <string> 
 #include <algorithm>
 #include <cctype>
-
 using namespace std;
 
-string cleanWord(string word) {
-    string result = "";
-    for (char c : word) {
-        if (!ispunct((unsigned char)c)) {
-            result += (char)tolower((unsigned char)c);
-        }
-    }
-    return result;
-}
-
 bool isWordInText(string sentence, string looking_word) {
-    looking_word = cleanWord(looking_word);
-    if (looking_word.empty()) return false;
-
-    stringstream ss(sentence);
-    string word;
-    while (ss >> word) {
-        if (cleanWord(word) == looking_word)
-            return true;
-    }
-    return false;
-}
-
-string generateNewText(string text1, string text2) {
-    string result = "";
-    string word;
-
-    stringstream ss1(text1);
-    while (ss1 >> word) {
-        string cleaned = cleanWord(word);
-        if (!cleaned.empty() && !isWordInText(text2, cleaned)) {
-            result += cleaned + " ";
-        }
-    }
-
-    stringstream ss2(text2);
-    while (ss2 >> word) {
-        string cleaned = cleanWord(word);
-        if (!cleaned.empty() && !isWordInText(text1, cleaned)) {
-            result += cleaned + " ";
-        }
-    }
-
-    return result;
+  string chars_to_remove = ",.?!";
+  for (char c : chars_to_remove) {
+      replace(sentence.begin(), sentence.end(), c, ' ');
+  }
+  
+  transform(looking_word.begin(), looking_word.end(), looking_word.begin(), ::tolower);
+  
+  stringstream ss(sentence);
+  string word;
+  
+  while (ss >> word) {
+    transform(word.begin(), word.end(), word.begin(), ::tolower);
+    
+    if (word == looking_word)
+      return true;
+  }
+  
+  return false;
 }
 
 int main() {
-    string t1, t2;
+  string sentence = "Hello, world! How are you?";
+  string sentence2 = "Hello my friend, you cool";
+  string result = "";
+  
+  string chars_to_remove = ",.?!";
+  for (char c : chars_to_remove) {
+    replace(sentence.begin(), sentence.end(), c, ' ');
+  }
+  
+  stringstream ss(sentence);
+  string word;
+  bool temp;
+  
+  while (ss >> word) {
+    temp = isWordInText(sentence2, word);
+    if (temp) {
+      result += word + " ";
+    }
+  }
+   
+  cout << result;
     
-    getline(cin, t1);
-    getline(cin, t2);
-
-    string result = generateNewText(t1, t2);
-    cout << result << endl;
-
-    return 0;
+  return 0;
 }
